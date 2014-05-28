@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
+    <ui:composition template="#{bootstrap.elements['template-location']}">
+
+        <ui:define name="main-program-panel">
+            <h:panelGroup id="search" layout="block" class="row" >
+                <h:form id="#{ProgramFile.formFileFinder.FORM_ID}">
+                    <div id="search-panel" class="col-lg-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Search Files</h3>
+                            </div>
+                            <div class="panel-body">
+                                <p style="mbl">
+                                    <h:inputText id="search-file-name" class="form-control" value="#{ProgramFile.formFileFinder.searchName}"/>
+                                    <p:watermark for="search-file-name" value="Search Filename" />
+                                </p>
+                                <p style="mbl">
+                                    <span class="label label-default">Uploaded after</span>
+                                    <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
+                                                value="#{ProgramFile.formFileFinder.searchStartDate}" />
+                                </p>
+                                <p style="mbl">
+                                    <span class="label label-default">Uploaded before:</span>
+                                    <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
+                                                value="#{ProgramFile.formFileFinder.searchEndDate}"
+                                                />
+                                </p>
+                                <p style="mbl">
+                                    <p:commandButton value="Search" styleClass="btn btn-default btn-primary" 
+                                                     actionListener="#{ProgramFile.formFileFinder.search()}"/>
+                                    <p:commandButton value="Reset" styleClass="btn btn-default " />
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="results-panel" class="col-lg-3">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Search Results</h3>
+                            </div>
+                            <div class="panel-body">
+                                <select class="selectpicker">
+                                    <option value="0">File 1</option>
+                                    <option value="1">Edit File 1</option>
+
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </h:panelGroup>
+            <script type="text/javascript">
+                $(document).ready(function() {
+                    $('.selectpicker').selectpicker({style: 'btn btn-hg btn-primary', menuStyle: 'dropdown-inverse'});
+                });
+            </script>
+        </ui:define>
+
+    </ui:composition>
+</html>
+
