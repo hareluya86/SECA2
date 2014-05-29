@@ -6,10 +6,31 @@
 
 package seca2.program.file;
 
+import java.util.ArrayList;
+import java.util.List;
+import seca2.entity.file.FileEntity;
+
 /**
  *
  * @author KH
  */
 public class FileMenuWrapper {
+    
+    private FileEntity wrappedFile;
+    
+    public List<String> getDropdownMenu(){
+        List<String> dropdownMenu = new ArrayList<String>();
+        
+        dropdownMenu.add()
+    }
+
+    public FileEntity getWrappedFile() {
+        return wrappedFile;
+    }
+
+    public void setWrappedFile(FileEntity wrappedFile) {
+        this.wrappedFile = wrappedFile;
+    }
+    
     
 }
