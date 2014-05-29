@@ -1,5 +1,6 @@
 seca2\entity\file\FileListBean.class
 seca2\program\user\FormUserLogin.class
+seca2\program\file\FormFileEditor.class
 seca2\entity\file\DefaultFilenameListener.class
 seca2\program\file\FormFileUploader.class
 seca2\program\file\InvalidFileException.class

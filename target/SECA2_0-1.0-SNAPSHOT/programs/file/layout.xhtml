@@ -21,7 +21,7 @@
                                     <p:watermark for="search-file-name" value="Search Filename" />
                                 </div>
                                 <div class="mbl">
-                                    <span class="label label-default">Uploaded after</span>
+                                    <span class="label label-default">Uploaded after:</span>
                                     <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
                                                 value="#{ProgramFile.formFileFinder.searchStartDate}" 
                                                 />
@@ -32,41 +32,82 @@
                                     <p:commandButton value="Search" styleClass="btn btn-default btn-primary" 
                                                      actionListener="#{ProgramFile.formFileFinder.search()}"
                                                      update="@form"/>
-                                    <p:commandButton value="Reset" styleClass="btn btn-default " />
+                                    <p:commandButton value="Reset" styleClass="btn btn-default "
+                                                     actionListener="#{ProgramFile.formFileFinder.reset()}"
+                                                     update="@form"/>
+                                    <p:commandButton value="Reset all" styleClass="btn btn-default "
+                                                     actionListener="#{ProgramFile.resetAll()}"
+                                                     update="@form"/>
                                 </div>
                                 <div style=" font-size: 12px;">
                                     <c:forEach items="#{facesContext.messageList}" var="m">
                                         <div class="alert alert-danger" >
-                                            #{m.summary}
+                                            <strong>#{m.summary}</strong><br />
+                                            #{m.detail}
                                         </div>
                                     </c:forEach>
-
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <div id="results-panel" class="col-lg-3">
+                    <h:panelGroup id="results-panel" class="col-lg-3">
+
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Search Results</h3>
                             </div>
                             <div class="panel-body">
-                                <select class="selectpicker">
-                                    <option value="0">File 1</option>
-                                    <option value="1">Edit File 1</option>
+                                <c:forEach items="#{ProgramFile.formFileFinder.results}" var="f">
+                                    <select class="selectpicker" >
+                                        <dt>#{f.FILENAME}</dt>
+                                        <option value="0" >
+                                            <h:commandLink >
+                                                <f:ajax listener="#{ProgramFile.loadFileInEditingPanel()}"
+                                                        render=":form-file-editor"
+                                                        event="click" />    
+                                                #{f.FILENAME}
+                                            </h:commandLink>
+                                        </option>
+                                        <option value="1" >
+                                            Edit #{f.FILENAME}
+                                        </option>
 
-                                </select>
+                                    </select>
+                                </c:forEach>
                             </div>
                         </div>
-                    </div>
+                    </h:panelGroup>
+                    <script type="text/javascript">
+                        $(document).ready(function() {
+                            $('.selectpicker').selectpicker({style: 'btn  btn-wide btn-primary', menuStyle: 'dropdown-inverse'});
+                        });
+                    </script>
                 </h:form>
+                <h:panelGroup id="editing-panel" class="col-lg-6">
+                    <h:form id="form-file-editor">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Editing Panel</h3>
+                            </div>
+                            <div class="panel-body">
+                                #{ProgramFile.formFileEditor.testName}
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">Filename</span>
+                                        <input type="text" class="form-control" placeholder=""
+                                               c:value="#{ProgramFile.formFileEditor.testName}"/>
+                                        
+                                    </div>
+                                </div>      
+                            </div>
+                        </div>
+                    </h:form>
+                </h:panelGroup>
+
             </h:panelGroup>
-            <script type="text/javascript">
-                $(document).ready(function() {
-                    $('.selectpicker').selectpicker({style: 'btn btn-hg btn-wide btn-primary', menuStyle: 'dropdown-inverse'});
-                });
-            </script>
+
+
         </ui:define>
 
     </ui:composition>
