@@ -3,38 +3,45 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition template="#{bootstrap.elements['template-location']}">
 
         <ui:define name="main-program-panel">
             <h:panelGroup id="search" layout="block" class="row" >
-                <h:form id="#{ProgramFile.formFileFinder.FORM_ID}">
+                <h:form id="form-file-finder"><!--impt! cannot be an EL because on render it would wipe out the entire view-->
                     <div id="search-panel" class="col-lg-3">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Search Files</h3>
                             </div>
                             <div class="panel-body">
-                                <p style="mbl">
+                                <div class="mbl">
                                     <h:inputText id="search-file-name" class="form-control" value="#{ProgramFile.formFileFinder.searchName}"/>
                                     <p:watermark for="search-file-name" value="Search Filename" />
-                                </p>
-                                <p style="mbl">
+                                </div>
+                                <div class="mbl">
                                     <span class="label label-default">Uploaded after</span>
                                     <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
-                                                value="#{ProgramFile.formFileFinder.searchStartDate}" />
-                                </p>
-                                <p style="mbl">
+                                                value="#{ProgramFile.formFileFinder.searchStartDate}" 
+                                                />
                                     <span class="label label-default">Uploaded before:</span>
                                     <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
                                                 value="#{ProgramFile.formFileFinder.searchEndDate}"
                                                 />
-                                </p>
-                                <p style="mbl">
                                     <p:commandButton value="Search" styleClass="btn btn-default btn-primary" 
-                                                     actionListener="#{ProgramFile.formFileFinder.search()}"/>
+                                                     actionListener="#{ProgramFile.formFileFinder.search()}"
+                                                     update="@form"/>
                                     <p:commandButton value="Reset" styleClass="btn btn-default " />
-                                </p>
+                                </div>
+                                <div style=" font-size: 12px;">
+                                    <c:forEach items="#{facesContext.messageList}" var="m">
+                                        <div class="alert alert-danger" >
+                                            #{m.summary}
+                                        </div>
+                                    </c:forEach>
+
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -57,7 +64,7 @@
             </h:panelGroup>
             <script type="text/javascript">
                 $(document).ready(function() {
-                    $('.selectpicker').selectpicker({style: 'btn btn-hg btn-primary', menuStyle: 'dropdown-inverse'});
+                    $('.selectpicker').selectpicker({style: 'btn btn-hg btn-wide btn-primary', menuStyle: 'dropdown-inverse'});
                 });
             </script>
         </ui:define>
