@@ -22,7 +22,7 @@ public class UserModule implements Serializable{
     
     private String sSessionId;
     private String previousURI;
-    private final String loginContainerName = "login-form:loginbox-container"; // should not be here!
+    private final String loginContainerName = "form-user-login:loginbox-container"; // should not be here!
     
     public boolean checkSessionActive() {
         FacesContext fc = FacesContext.getCurrentInstance();
@@ -30,7 +30,6 @@ public class UserModule implements Serializable{
         HttpServletRequest req = (HttpServletRequest) ec.getRequest();
         
         fc.getPartialViewContext().getRenderIds().add(loginContainerName);
-        
         HttpSession session = req.getSession(false);
         if (session == null) {
             return false;
@@ -38,6 +37,7 @@ public class UserModule implements Serializable{
             if (sSessionId != null && sSessionId.equals(session.getId())) {
                 //hide login block
                 //session.setAttribute("user", 1);
+                
                 return true;
             } else {
                 //pop up login block

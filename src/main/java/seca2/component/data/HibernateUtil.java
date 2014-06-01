@@ -27,7 +27,7 @@ public class HibernateUtil implements Serializable {
      */
     public SessionFactory getSessionFactory(){
         if(sessionFactory == null){
-            Configuration cfg = this.createFullConfig();
+            Configuration cfg = this.createJNDIConfig();
             cfg.configure();
             ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder ().applySettings(cfg.getProperties()).build();
             sessionFactory = cfg.buildSessionFactory(serviceRegistry);

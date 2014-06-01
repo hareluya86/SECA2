@@ -15,6 +15,7 @@ import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 import seca2.component.data.HibernateUtil;
 import seca2.entity.file.FileEntity;
+import seca2.entity.file.FileSequence;
 
 /**
  *
@@ -63,6 +64,18 @@ public class FileService {
                 .add(Restrictions.ilike("FILENAME", "%"+searchName+"%"))
                 //.add(Restrictions.ge("DATE_CREATED", searchStartDate))
                 //.add(Restrictions.le("DATE_CREATED", searchEndDate))
+                .list();
+        
+        return results;
+    }
+    
+    public List<FileSequence> getSequences(long fileId, long start, long end){
+        if(session == null || !session.isOpen()) 
+            session = hibernateUtil.getSession();
+        List<FileSequence> results = session.createCriteria(FileSequence.class)
+                .add(Restrictions.eq("FILE.FILE_ID", fileId))
+                .add(Restrictions.ge("ORIGINAL_LINE_NUM", start))
+                .add(Restrictions.le("ORIGINAL_LINE_NUM", end))
                 .list();
         
         return results;

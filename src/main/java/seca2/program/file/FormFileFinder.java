@@ -34,6 +34,9 @@ public class FormFileFinder implements Serializable {
     private Date searchStartDate;
     private Date searchEndDate;
     private List<FileEntity> results;
+    private List<FileMenuWrapper> wrappedResults;
+    private FileEntity selectedFile;
+    private String mode;
     private String FORM_ID = "form-file-finder";
     
     @EJB private FileService fileService;
@@ -45,6 +48,7 @@ public class FormFileFinder implements Serializable {
     @PostConstruct
     public void init(){
         results = new ArrayList<FileEntity>();
+        wrappedResults = new ArrayList<FileMenuWrapper>();
         //Initialize required criteria
         
     }
@@ -52,6 +56,14 @@ public class FormFileFinder implements Serializable {
     public void search(){
         try{
             results = fileService.searchFileByName(searchName);
+            wrappedResults = new ArrayList<FileMenuWrapper>();
+            for(FileEntity f:results){
+                FileMenuWrapper wrappedF = new FileMenuWrapper();
+                wrappedF.setWrappedFile(f);
+                wrappedF.setSelected(false);
+                wrappedF.createDropdownMenu(); //initialize dropdown menu
+                wrappedResults.add(wrappedF);
+            }
         } catch(EJBException ejbex){
             String message = ejbex.getCause().getMessage();
             if (ejbex.getCause() instanceof JDBCConnectionException) {
@@ -76,6 +88,7 @@ public class FormFileFinder implements Serializable {
         this.searchStartDate = null;
         this.searchEndDate = null;
         this.results = new ArrayList<FileEntity>();
+        this.wrappedResults = new ArrayList<FileMenuWrapper>();
     }
 
     public String getSearchName() {
@@ -108,6 +121,30 @@ public class FormFileFinder implements Serializable {
 
     public void setFORM_ID(String FORM_ID) {
         this.FORM_ID = FORM_ID;
+    }
+
+    public List<FileMenuWrapper> getWrappedResults() {
+        return wrappedResults;
+    }
+
+    public void setWrappedResults(List<FileMenuWrapper> wrappedResults) {
+        this.wrappedResults = wrappedResults;
+    }
+
+    public FileEntity getSelectedFile() {
+        return selectedFile;
+    }
+
+    public void setSelectedFile(FileEntity selectedFile) {
+        this.selectedFile = selectedFile;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
     }
     
     

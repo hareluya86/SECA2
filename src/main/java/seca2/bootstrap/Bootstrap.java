@@ -68,6 +68,10 @@ public class Bootstrap implements Serializable {
         elements.put("error-module-block", "/programs/error/errorBox.xhtml");
     }
     
+    public void checkInstalled(){
+        
+    }
+    
     /**
      * User Management!
      * <p>

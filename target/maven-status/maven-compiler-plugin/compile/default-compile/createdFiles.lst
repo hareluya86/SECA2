@@ -1,12 +1,14 @@
 seca2\entity\file\FileListBean.class
 seca2\program\user\FormUserLogin.class
 seca2\program\file\FormFileEditor.class
+seca2\program\file\FileMenuWrapper.class
 seca2\entity\file\DefaultFilenameListener.class
 seca2\program\file\FormFileUploader.class
 seca2\program\file\InvalidFileException.class
 seca2\program\messenger\FacesMessenger.class
 seca2\entity\user\UserType.class
 seca2\program\file\ProgramFile.class
+seca2\program\file\FileMenuItemWrapper.class
 seca2\program\menu\TopMenu.class
 seca2\entity\file\FileSequence_.class
 seca2\entity\file\FileEntity$FILE_STATUS.class
@@ -15,9 +17,12 @@ seca2\program\file\FormFileFinder.class
 seca2\entity\user\UserSession.class
 seca2\component\data\HibernateUtil.class
 seca2\component\user\UserRegistrationException.class
+seca2\component\data\DripDatasource.class
 seca2\entity\file\FileEntity_.class
+seca2\program\file\LazyFileSequenceModel.class
 seca2\component\user\UserTypeException.class
 seca2\entity\user\UserEntity.class
+seca2\component\data\DripFeederService.class
 seca2\bootstrap\module\UserModule.class
 seca2\program\messenger\EscapableMessagesRenderer.class
 seca2\component\file\FileService.class

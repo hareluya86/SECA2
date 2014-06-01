@@ -274,6 +274,7 @@ public class FormFileUploader implements Serializable {
         fileEntity.setNUM_OF_SEQUENCE(0);
         fileEntity.setFILE_SIZE_BYTE(0);
         fileEntity.setLAST_SEQUENCE(0);
+        fileEntity.setREMAINING_SEQUENCE(0);
         fileEntity.setUPLOAD_STATUS(INCOMPLETE);
         
         return fileEntity;
@@ -286,6 +287,7 @@ public class FormFileUploader implements Serializable {
         sequence.setFILE(file);
         //file.getSequences().add(sequence);//Because you will end up with a list of millions of objects in memory
         file.setLAST_SEQUENCE(file.getLAST_SEQUENCE()+1);
+        file.setREMAINING_SEQUENCE(file.getLAST_SEQUENCE());
         sequence.setORIGINAL_LINE_NUM(file.getLAST_SEQUENCE());
         sequence.setCURRENT_LINE_NUM(file.getLAST_SEQUENCE());
         if(file.getNUM_OF_SEQUENCE() <= file.getLAST_SEQUENCE())

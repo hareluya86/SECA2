@@ -17,11 +17,42 @@ import seca2.entity.file.FileEntity;
 public class FileMenuWrapper {
     
     private FileEntity wrappedFile;
+    private boolean selected;
+    private FileMenuItemWrapper selectedItem;
+    private String selectedValue;
+    private List<FileMenuItemWrapper> items;
     
-    public List<String> getDropdownMenu(){
-        List<String> dropdownMenu = new ArrayList<String>();
+    public void select(){
+        this.selected = true;
+        this.createDropdownMenu();
+        for(FileMenuItemWrapper item:items){
+            if(selectedValue.equals(item.getItemValue())){
+                item.setItemLabel(item.getItemLabel().concat("ing "+wrappedFile.getFILENAME()));
+            }
+        }
+    }
+    
+    public void unselect(){
+        this.selected = false;
+        this.createDropdownMenu();
+    }
+    
+    public void createDropdownMenu(){
+        List<FileMenuItemWrapper> dropdownMenu = new ArrayList<FileMenuItemWrapper>();
         
-        dropdownMenu.add()
+        //create a FileMenuItemWrapper object
+        //1. Create menu items
+        FileMenuItemWrapper menuItemTitle = new FileMenuItemWrapper();
+        menuItemTitle.setItemLabel(wrappedFile.getFILENAME());
+        menuItemTitle.setItemValue("0");
+        dropdownMenu.add(menuItemTitle);
+        
+        FileMenuItemWrapper menuItemEdit = new FileMenuItemWrapper();
+        menuItemEdit.setItemLabel("Edit");
+        menuItemEdit.setItemValue("1");
+        dropdownMenu.add(menuItemEdit);
+        
+        items = dropdownMenu;
     }
 
     public FileEntity getWrappedFile() {
@@ -30,6 +61,38 @@ public class FileMenuWrapper {
 
     public void setWrappedFile(FileEntity wrappedFile) {
         this.wrappedFile = wrappedFile;
+    }
+
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void setSelected(boolean selected) {
+        this.selected = selected;
+    }
+
+    public FileMenuItemWrapper getSelectedItem() {
+        return selectedItem;
+    }
+
+    public void setSelectedItem(FileMenuItemWrapper selectedItem) {
+        this.selectedItem = selectedItem;
+    }
+
+    public String getSelectedValue() {
+        return selectedValue;
+    }
+
+    public void setSelectedValue(String selectedValue) {
+        this.selectedValue = selectedValue;
+    }
+
+    public List<FileMenuItemWrapper> getItems() {
+        return items;
+    }
+
+    public void setItems(List<FileMenuItemWrapper> items) {
+        this.items = items;
     }
     
     
