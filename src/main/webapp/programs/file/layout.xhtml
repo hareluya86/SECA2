@@ -22,14 +22,18 @@
                                         <p:watermark for="search-file-name" value="Search Filename" />
                                     </div>
                                     <div class="mbl">
-                                        <span class="label label-default">Uploaded after:</span>
+                                        <span class="label label-default">Uploaded after:</span><br />
                                         <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
                                                     value="#{ProgramFile.formFileFinder.searchStartDate}" 
                                                     />
-                                        <span class="label label-default">Uploaded before:</span>
+                                    </div>
+                                    <div class="mbl">
+                                        <span class="label label-default">Uploaded before:</span><br />
                                         <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
                                                     value="#{ProgramFile.formFileFinder.searchEndDate}"
                                                     />
+                                    </div>
+                                    <div class="mbl">
                                         <p:commandButton value="Search" styleClass="btn btn-default btn-primary" 
                                                          actionListener="#{ProgramFile.formFileFinder.search()}"
                                                          update="@form"/>
