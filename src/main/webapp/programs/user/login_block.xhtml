@@ -6,14 +6,23 @@
       xmlns:p="http://primefaces.org/ui">
     <ui:composition>
         <link type="text/css" rel="stylesheet" href="#{request.contextPath}/programs/user/login_block.css" />
+
         <h:form id="form-user-login">
             <h:panelGroup id="loginbox-container" layout="block">
-                <!--<p:blockUI block="login-form-ajax" trigger="login-button">
-                    <img src="#{request.contextPath}/programs/file/ajax-loader1.gif" class="ajax-large" />
-                </p:blockUI>-->
+                <p:blockUI block="loginbox-container" trigger="login-button">
+                    <div id="canvasloader-container"></div>
+                    <script>
+                        $(document).ready(function() {
+
+                        });
+                        var cl = new CanvasLoader('canvasloader-container');
+                        cl.show(); // Hidden by default
+                    </script>
+                </p:blockUI>
                 <p:dialog id="loginDialog" widgetVar="loginbox" header="" modal="true" 
                           resizable="false" showHeader="false"
                           style="" closable="false">  
+
                     <!--<h:panelGroup id="login-form-ajax" layout="block" styleClass="row">
 
 
@@ -34,28 +43,28 @@
                     </h:panelGroup>-->
                     <h:panelGroup layout="block" styleClass="row">
                         <div class="panel panel-danger">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Please log in</h3>
-                                </div>
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Please log in</h3>
+                            </div>
                             <div class="panel-body">
-                                    <h:inputText id="login-username" class="form-control" value="#{FormUserLogin.username}"/>
-                                    <p:watermark for="login-username" value="Enter Username" />
-                                    
-                                    <h:inputSecret id="login-password" class="form-control" value="#{FormUserLogin.password}"/>
-                                    <p:watermark for="login-password" value="Enter Password" />
-                                    
-                                    <div style="text-align: center; margin-top: 5px;">
-                                        <p:commandButton value="Login" styleClass="btn btn-hg btn-wide btn-primary" 
+                                <h:inputText id="login-username" class="form-control" value="#{FormUserLogin.username}"/>
+                                <p:watermark for="login-username" value="Enter Username" />
+
+                                <h:inputSecret id="login-password" class="form-control" value="#{FormUserLogin.password}"/>
+                                <p:watermark for="login-password" value="Enter Password" />
+
+                                <div style="text-align: center; margin-top: 5px;">
+                                    <p:commandButton id="login-button" value="LOGIN" styleClass="btn btn-hg btn-wide btn-primary" 
                                                      action="#{FormUserLogin.login(session.id)}"
                                                      update="@form"  
-                                                      />
-                                    </div>
+                                                     />
+                                </div>
                             </div>
                         </div>
                     </h:panelGroup>
                 </p:dialog>
                 <!--temporary location before i find out where to put this!-->
-                
+
                 <script type="text/javascript">
                     $(document).ready(function() {
                         if (typeof (Storage) != "undefined")
@@ -78,7 +87,7 @@
                 <p:ajaxExceptionHandler type="javax.faces.application.ViewExpiredException"
                                         update="loginDialog"
                                         onexception="PF('loginbox').show();" />
-                
+
             </h:panelGroup>
         </h:form>
     </ui:composition>
