@@ -19,6 +19,7 @@ seca2\component\data\HibernateUtil.class
 seca2\component\user\UserRegistrationException.class
 seca2\component\data\DripDatasource.class
 seca2\entity\file\FileEntity_.class
+seca2\component\file\InvalidFileException.class
 seca2\program\file\LazyFileSequenceModel.class
 seca2\component\user\UserTypeException.class
 seca2\entity\user\UserEntity.class
@@ -29,6 +30,7 @@ seca2\component\file\FileService.class
 seca2\program\file\FormFileUploader$1.class
 seca2\component\program\ProgramRegistry.class
 seca2\bootstrap\Bootstrap.class
+seca2\component\file\FileOperationException.class
 seca2\bootstrap\module\ProgramModule.class
 seca2\entity\file\FileEntity.class
 seca2\component\user\UserAccountLockedException.class

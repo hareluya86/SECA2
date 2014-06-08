@@ -22,8 +22,15 @@
                         </li>
 
                     </c:forEach>
+                    <!--logout button-->
+                    <li>
+                        <h:form>
+                            <h:commandLink actionListener="#{FormUserLogin.logout()}" value="LOGOUT" />
+                        </h:form>
+                    </li>
                 </ul>
                 <!--leave this here to look good-->
+                
                 <form class="navbar-form navbar-right" action="#" role="search" style="width: 250px">
                     <div class="form-group">
                         <div class="input-group">

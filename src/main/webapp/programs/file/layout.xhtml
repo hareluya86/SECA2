@@ -8,79 +8,155 @@
     <ui:composition template="#{bootstrap.elements['template-location']}">
 
         <ui:define name="main-program-panel">
+            <link rel="stylesheet" href="#{request.contextPath}/programs/file/program-file.css" />
             <h:panelGroup id="search" layout="block" class="row" >
-                <h:form id="form-file-finder"><!--impt! cannot be an EL because on render it would wipe out the entire view-->
-                    <div>
-                        <h:panelGroup layout="block" id="search-panel" class="col-lg-3" >
-                            <div class="panel panel-default">
-                                <div class="panel-heading">
-                                    <h3 class="panel-title">Search Files</h3>
+
+                <div class="col-lg-6">
+                    <div class="row" >
+                        <h:form id="form-file-finder"><!--impt! cannot be an EL because on render it would wipe out the entire view-->
+                            <h:panelGroup layout="block" id="search-panel" class="col-lg-6" >
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Search Files</h3>
+                                    </div>
+                                    <div class="panel-body search-panel" style="overflow: auto">
+                                        <div class="mbs">
+                                            <h:inputText id="search-file-name" class="form-control" value="#{ProgramFile.formFileFinder.searchName}"/>
+                                            <p:watermark for="search-file-name" value="Search Filename" />
+                                        </div>
+                                        <div class="mbx">
+                                            <span class="label label-default">Uploaded after:</span>
+                                        </div>
+                                        <div class="mbs">
+                                            <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
+                                                        value="#{ProgramFile.formFileFinder.searchStartDate}" 
+                                                        />
+                                        </div>
+                                        <div class="mbx">
+                                            <span class="label label-default">Uploaded before:</span>
+                                        </div>
+                                        <div class="mbs">
+                                            <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
+                                                        value="#{ProgramFile.formFileFinder.searchEndDate}"
+                                                        />
+                                        </div>
+                                        <div class="mbs">
+                                            <p:commandButton value="Search" styleClass="btn btn-default btn-primary" 
+                                                             actionListener="#{ProgramFile.formFileFinder.search()}"
+                                                             update="@form"/>
+                                            <p:commandButton value="Reset" styleClass="btn btn-default "
+                                                             actionListener="#{ProgramFile.formFileFinder.reset()}"
+                                                             update="@form"/>
+                                        </div>
+                                        <div class="mbs">
+                                            <p:commandButton value="Reset all" styleClass="btn btn-default "
+                                                             actionListener="#{ProgramFile.resetAll()}"
+                                                             update="@form,:form-file-editor"/>
+                                        </div>
+                                        <div class="mtm" style=" font-size: 12px;">
+                                            <c:forEach items="#{facesContext.messageList}" var="m">
+                                                <div class="alert alert-danger" >
+                                                    <strong>#{m.summary}</strong><br />
+                                                    #{m.detail}
+                                                </div>
+                                            </c:forEach>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="panel-body" style="height: 500px; overflow: auto">
-                                    <div class="mbl">
-                                        <h:inputText id="search-file-name" class="form-control" value="#{ProgramFile.formFileFinder.searchName}"/>
-                                        <p:watermark for="search-file-name" value="Search Filename" />
+                            </h:panelGroup>
+                            <h:panelGroup id="results-panel" class="col-lg-6">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Search Results</h3>
                                     </div>
-                                    <div class="mbl">
-                                        <span class="label label-default">Uploaded after:</span>
-                                        <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
-                                                    value="#{ProgramFile.formFileFinder.searchStartDate}" 
-                                                    />
-                                        <span class="label label-default">Uploaded before:</span>
-                                        <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
-                                                    value="#{ProgramFile.formFileFinder.searchEndDate}"
-                                                    />
-                                        <p:commandButton value="Search" styleClass="btn btn-default btn-primary" 
-                                                         actionListener="#{ProgramFile.formFileFinder.search()}"
-                                                         update="@form"/>
-                                        <p:commandButton value="Reset" styleClass="btn btn-default "
-                                                         actionListener="#{ProgramFile.formFileFinder.reset()}"
-                                                         update="@form"/>
-                                        <p:commandButton value="Reset all" styleClass="btn btn-default "
-                                                         actionListener="#{ProgramFile.resetAll()}"
-                                                         update="@form,:form-file-editor"/>
-                                    </div>
-                                    <div style=" font-size: 12px;">
-                                        <c:forEach items="#{facesContext.messageList}" var="m">
-                                            <div class="alert alert-danger" >
-                                                <strong>#{m.summary}</strong><br />
-                                                #{m.detail}
-                                            </div>
+                                    <div class="panel-body search-panel" style="overflow-y: auto">
+                                        <c:forEach items="#{ProgramFile.formFileFinder.wrappedResults}" var="wf">
+                                            <h:selectOneMenu class="selectpicker #{wf.selected ? 'selected':'unselected'}" 
+                                                             value="#{wf.selectedValue}" >
+                                                <f:selectItems value="#{wf.items}" var="menuItem" itemLabel="#{menuItem.itemLabel}"
+                                                               itemValue="#{menuItem.itemValue}" />
+                                                <f:ajax event="valueChange" listener="#{ProgramFile.loadFileInEditingPanel(wf.wrappedFile.FILE_ID)}" 
+                                                        render=":editing-panel results-panel"/>
+                                            </h:selectOneMenu>
                                         </c:forEach>
+                                        <script src="#{request.contextPath}/fix_f_ajax.js" type="text/javascript" />
+                                        <h:outputScript library="javax.faces" name="jsf.js" target="head" /> <!--for a bug fix in Mojarra 2.2-->
                                     </div>
                                 </div>
-                            </div>
-                        </h:panelGroup>
-                        <h:panelGroup id="results-panel" class="col-lg-3">
+                                <script type="text/javascript">
+                                    $(document).ready(function() {
+                                        $('.selectpicker.unselected').selectpicker({style: 'btn  btn-wide btn-primary', menuStyle: 'dropdown-inverse'});
+                                        $('.selectpicker.selected').selectpicker({style: 'btn btn-danger btn-wide btn-primary', menuStyle: 'dropdown-inverse'});
+
+                                    });
+                                </script>
+                            </h:panelGroup>
+                        </h:form>
+                    </div>
+                    <div class="row">
+                        <h:panelGroup layout="block" styleClass="col-lg-12">
                             <div class="panel panel-default">
                                 <div class="panel-heading">
-                                    <h3 class="panel-title">Search Results</h3>
+                                    <h3 class="panel-title">Upload </h3>
                                 </div>
-                                <div class="panel-body" style="height: 500px; overflow-y: auto">
-                                    <c:forEach items="#{ProgramFile.formFileFinder.wrappedResults}" var="wf">
-                                        <h:selectOneMenu class="selectpicker #{wf.selected ? 'selected':'unselected'}" 
-                                                         value="#{wf.selectedValue}" >
-                                            <f:selectItems value="#{wf.items}" var="menuItem" itemLabel="#{menuItem.itemLabel}"
-                                                           itemValue="#{menuItem.itemValue}" />
-                                            <f:ajax event="valueChange" listener="#{ProgramFile.loadFileInEditingPanel(wf.wrappedFile.FILE_ID)}" 
-                                                    render=":editing-panel results-panel"/>
-                                        </h:selectOneMenu>
-                                    </c:forEach>
-                                    <script src="#{request.contextPath}/fix_f_ajax.js" type="text/javascript" />
-                                    <h:outputScript library="javax.faces" name="jsf.js" target="head" /> <!--for a bug fix in Mojarra 2.2-->
+                                <div class="panel-body">
+                                    <h:form id="form-file-uploader" enctype="multipart/form-data"  >
+                                        <p:blockUI block="form-file-uploader" trigger="insert-file-button,cancel-insert-button">
+                                            <div id="canvasloader-container-fileupload"></div>
+                                        </p:blockUI>
+                                        <div style="font-size: 12px;">
+                                            
+                                            <c:forEach items="#{facesContext.messageList}" var="m">
+                                                <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="true">
+                                                    <strong>#{m.summary}</strong>
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="alert alert-danger" rendered="#{m.severity eq FacesMessage.SEVERITY_FATAL}">
+                                                    <strong>#{m.summary}</strong>
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="alert alert-success" rendered="#{m.severity eq FacesMessage.SEVERITY_INFO}">
+                                                    <strong>#{m.summary}</strong>
+                                                </h:panelGroup>
+                                                <h:panelGroup layout="block" styleClass="alert alert-warning" rendered="#{m.severity eq FacesMessage.SEVERITY_WARNING}">
+                                                    <strong>#{m.summary}</strong>
+                                                </h:panelGroup>
+                                                
+                                            </c:forEach>
+                                        </div>
+                                        <p:fileUpload fileUploadListener="#{ProgramFile.formFileUploader.uploadPlainFile}" 
+                                                      immediate="true" mode="advanced" auto="true" id="fileUploader" 
+                                                      multiple="false"
+                                                      sizeLimit="10000000000" 
+                                                      allowTypes="/(\.|\/)(TXT|txt|jpe?g|csv)$/"
+                                                      label="Select file from local system" styleClass="file-uploader"
+                                                      update="@form"
+                                                      >
+                                        </p:fileUpload>
+                                        <!--hack for PF file uploader-->
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('.file-uploader .ui-button-text').addClass('btn btn-primary'); //for choose file button
+                                            });
+                                        </script>
+
+                                        <p:commandButton id="insert-file-button" value="#{ProgramFile.formFileUploader.insertButtonValue}" 
+                                                         action="#{ProgramFile.formFileUploader.insertFileAndSequences2}" 
+                                                         rendered="#{ProgramFile.formFileUploader.showInsertButton}"
+                                                         disabled="#{ProgramFile.formFileUploader.disableInsertButton}"
+                                                         update="@form" styleClass="btn btn-primary"
+                                                         />
+                                        <p:commandButton id="cancel-insert-button" value="cancel"
+                                                         action="#{ProgramFile.formFileUploader.reset()}"
+                                                         rendered="#{ProgramFile.formFileUploader.showInsertButton}"
+                                                         update="@form"  styleClass="btn btn-default"
+                                                         >
+                                        </p:commandButton>
+                                    </h:form>
                                 </div>
                             </div>
-                            <script type="text/javascript">
-                                $(document).ready(function() {
-                                    $('.selectpicker.unselected').selectpicker({style: 'btn  btn-wide btn-primary', menuStyle: 'dropdown-inverse'});
-                                    $('.selectpicker.selected').selectpicker({style: 'btn btn-danger btn-wide btn-primary', menuStyle: 'dropdown-inverse'});
-
-                                });
-                            </script>
                         </h:panelGroup>
-
                     </div>
-                </h:form>
+                </div>
+
                 <h:panelGroup id="editing-panel" class="col-lg-6">
                     <h:form id="form-file-editor">
                         <div class="panel panel-default">
@@ -111,7 +187,7 @@
                                 <h3 class="panel-title">Sequences</h3>
                             </div>
 
-                            <table class="table">
+                            <table class="table small">
                                 <thead>
                                     <tr>
                                         <th>Line #</th>
@@ -120,7 +196,7 @@
                                     </tr>
                                 </thead>
                             </table>
-                            <h:panelGroup layout="block" styleClass="scrolltable" style="height: 300px; overflow: auto">
+                            <h:panelGroup layout="block" styleClass="scrolltable small" style="height: 300px; overflow: auto">
                                 <h:dataTable styleClass="table" value="#{ProgramFile.formFileEditor.cachedSequences}" var="fs"
                                              id="sequence-table" >
                                     <h:column>
@@ -129,7 +205,7 @@
                                     </h:column>
                                     <h:column>
                                         <!--<f:facet name="header">Sequence</f:facet>-->
-                                            #{fs.SEQUENCE_CONTENT}
+                                        #{fs.SEQUENCE_CONTENT}
                                     </h:column>
                                     <h:column>
                                         <!--<f:facet name="header">Status</f:facet>-->
@@ -168,7 +244,7 @@
                                                 //alert('end reached');
                                             }
                                             if ($(this).scrollTop() == 0) {
-                                                
+
                                                 $('.scrolltable-backward').click();
                                                 //alert('top reached');
                                             }
@@ -179,50 +255,6 @@
                             </h:panelGroup>
                         </div>
                     </h:form>
-                </h:panelGroup>
-            </h:panelGroup>
-            <h:panelGroup layout="block" styleClass="row">
-                <h:panelGroup layout="block" styleClass="col-lg-6">
-                    <!--<div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3 class="panel-title">Upload </h3>
-                        </div>
-                        <div class="panel-body">-->
-                    <h:form id="form-file-uploader" enctype="multipart/form-data"  >
-                        <p:blockUI block="form-file-uploader" trigger="insert-file-button,cancel-insert-button">
-                            <img src="#{request.contextPath}/programs/file/ajax_loader.gif" class="ajax-large" />
-                        </p:blockUI>
-                        <p:outputLabel id="messages-label" value="#{ProgramFile.formFileUploader.startUpload} " />
-                        <p:messages id="upload-messages" showDetail="true" autoUpdate="true" closable="true" 
-                                    for="form-file-uploader"/>
-                        <!--<h:form id="form" enctype="multipart/form-data">-->
-                            <h:inputFile id="file" value="#{bean.file}" />
-                            <h:commandButton value="Upload" styleClass="btn btn-gh"
-                                             action="#{bean.upload}"/>
-                        <!--</h:form>-->
-                        <p:fileUpload fileUploadListener="#{ProgramFile.formFileUploader.uploadFile}" immediate="true" 
-                                      mode="advanced" auto="true" id="fileUploader"
-                                      sizeLimit="10000000000" allowTypes="/(\.|\/)(TXT|txt|jpe?g|csv)$/"
-                                      label="Upload File"
-                                      update="@form" 
-                                      >
-                        </p:fileUpload>
-                        
-                        <p:commandButton id="insert-file-button" value="#{ProgramFile.formFileUploader.insertButtonValue}" 
-                                         action="#{ProgramFile.formFileUploader.insertFileAndSequences}" 
-                                         rendered="#{ProgramFile.formFileUploader.showInsertButton}"
-                                         disabled="#{ProgramFile.formFileUploader.disableInsertButton}"
-                                         update="@form"
-                                         />
-                        <p:commandButton id="cancel-insert-button" value="cancel"
-                                         action="#{ProgramFile.formFileUploader.cancel}"
-                                         rendered="#{ProgramFile.formFileUploader.showInsertButton}"
-                                         update="@form"  
-                                         >
-                        </p:commandButton>
-                    </h:form>
-                    <!--</div>
-                </div>-->
                 </h:panelGroup>
             </h:panelGroup>
 

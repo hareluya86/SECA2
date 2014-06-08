@@ -40,7 +40,7 @@ public class FormUserLogin {
     private String username;
     private String password;
     
-    private final String messageBoxId = "";
+    private final String messageBoxId = "form-user-login";
     
     public void login(String sessionId) throws IOException {
 

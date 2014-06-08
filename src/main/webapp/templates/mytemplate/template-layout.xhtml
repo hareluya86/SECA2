@@ -10,6 +10,8 @@
             <!--<link type="text/css" rel="stylesheet" href="#{request.contextPath}/templates/mytemplate/css/bootstrap/bootstrap-docs.css" />
             <link type="text/css" rel="stylesheet" href="#{request.contextPath}/templates/mytemplate/css/bootstrap/prettify.css" />-->
             <link rel="stylesheet" href="#{request.contextPath}/templates/mytemplate/css/flat-ui/flat-ui.css" /><!-- Loading Flat UI -->
+            <!--custom hacks-->
+            <link rel="stylesheet" href="#{request.contextPath}/templates/mytemplate/css/hacks/primefaces-hacks.css" /><!--PF hacks-->
             <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
             <!--[if lt IE 9]>
               <script src="js/html5shiv.js"></script>
@@ -24,6 +26,7 @@
         </h:body>
         <!--load all scripts-->
         <!--<script type="text/javascript" src="#{request.contextPath}/templates/mytemplate/js/flat-ui/bootstrap.min.js" />-->
+        <!--use PF's JQuery instead>-->
         <h:outputScript library="primefaces" name="jquery/jquery.js" target="head" />
         <!--use PF's JQuery instead
         <script src="#{request.contextPath}/templates/mytemplate/js/flat-ui/jquery-1.8.3.min.js"></script> 
@@ -36,7 +39,19 @@
         <script src="#{request.contextPath}/templates/mytemplate/js/flat-ui/flatui-radio.js"></script>
         <script src="#{request.contextPath}/templates/mytemplate/js/flat-ui/jquery.tagsinput.js"></script>
         <script src="#{request.contextPath}/templates/mytemplate/js/flat-ui/jquery.placeholder.js"></script>
+        
+        <!--Custom components/hacks-->
         <!--ajax loader-->
         <script src="#{request.contextPath}/templates/mytemplate/js/ajax/ajax-loader.js"></script>
+        <!--<script src="#{request.contextPath}/templates/mytemplate/js/ajax/ajax-loader-hack.js"></script>-->
+        <script>
+            $(document).ready(function() {
+                var cl = new CanvasLoader('canvasloader-container-fileupload');
+                cl.show(); // Hidden by default
+                var c2 = new CanvasLoader('canvasloader-container-login');
+                c2.show(); // Hidden by default
+            });
+            
+        </script>
     </f:view>
 </html>

@@ -3,50 +3,34 @@
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     <ui:composition>
         <link type="text/css" rel="stylesheet" href="#{request.contextPath}/programs/user/login_block.css" />
 
         <h:form id="form-user-login">
             <h:panelGroup id="loginbox-container" layout="block">
-                <p:blockUI block="loginbox-container" trigger="login-button">
-                    <div id="canvasloader-container"></div>
-                    <script>
-                        $(document).ready(function() {
-
-                        });
-                        var cl = new CanvasLoader('canvasloader-container');
-                        cl.show(); // Hidden by default
-                    </script>
+                <p:blockUI block="loginbox-inside" trigger="login-button">
+                    <div id="canvasloader-container-login"></div>
+                        
                 </p:blockUI>
                 <p:dialog id="loginDialog" widgetVar="loginbox" header="" modal="true" 
                           resizable="false" showHeader="false"
                           style="" closable="false">  
-
-                    <!--<h:panelGroup id="login-form-ajax" layout="block" styleClass="row">
-
-
-                        <p:panelGrid id="login-form-table" columns="2">
-                            <f:facet name="header">
-                                <p:messages id="login-form-messages" showDetail="false" autoUpdate="true"
-                                            
-                                            for="login-form" />
-                            </f:facet>
-                            <p:outputLabel value="Username: " />
-                            <p:inputText value="" />
-
-                            <p:outputLabel value="Password: " />
-                            <p:password value="" />
-                        </p:panelGrid>
-                        <p:commandButton value="Log in"
-                                         update="loginbox-container" id="login-button"/>
-                    </h:panelGroup>-->
-                    <h:panelGroup layout="block" styleClass="row">
+                    <h:panelGroup id="loginbox-inside" layout="block" styleClass="row">
                         <div class="panel panel-danger">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Please log in</h3>
                             </div>
+                            <!--error messages-->
                             <div class="panel-body">
+                                <div style=" font-size: 12px;">
+                                    <c:forEach items="#{facesContext.messageList}" var="m">
+                                        <div class="alert alert-danger" >
+                                            <strong>#{m.summary}</strong>
+                                        </div>
+                                    </c:forEach>
+                                </div>
                                 <h:inputText id="login-username" class="form-control" value="#{FormUserLogin.username}"/>
                                 <p:watermark for="login-username" value="Enter Username" />
 

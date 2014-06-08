@@ -1,0 +1,91 @@
+/*For ui-block*/
+div.ui-widget-overlay {
+    background-color: rgba(0,0,0,0.5);
+}
+div.ui-shadow {
+    box-shadow: none;
+}
+
+/*For fileUpload progressbar*/
+.ui-progressbar {
+    
+    display: inline-block;
+    vertical-align: baseline;
+
+    height: 20px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, .1);
+    
+    background: #ebedef;
+    border-radius: 32px;
+    height: 12px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.ui-progressbar-value {
+    background: none; 
+    float: left;
+    width: 0;
+    height: 100%;
+    font-size: 12px;
+    line-height: 20px;
+    color: #fff;
+    text-align: center;
+    -webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .15);
+    -webkit-transition: width .6s ease;
+    transition: width .6s ease;
+
+    background: #1abc9c;
+    line-height: 12px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+
+/*For fileUpload text and stuff*/
+table.ui-fileupload-files {
+    margin-right: -15px;
+    margin-left: -15px;
+    
+    font-size: 80%;
+}
+.ui-fileupload-files tr{
+    position: relative;
+  min-height: 1px;
+  padding-right: 15px;
+  padding-left: 15px;
+  
+}
+.ui-fileupload-files button.ui-fileupload-cancel{
+    /*from bootstrap*/
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: normal;
+    line-height: 1.428571429;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    -webkit-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+         -o-user-select: none;
+            user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    
+    /*from flat-ui*/
+    color: #ffffff;
+    background-color: #e74c3c;
+}
+
+.ui-fileupload-files .ui-fileupload-cancel span.ui-button-text{
+    
+}

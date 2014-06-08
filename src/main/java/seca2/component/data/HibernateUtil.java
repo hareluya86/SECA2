@@ -83,7 +83,7 @@ public class HibernateUtil implements Serializable {
         cfg.setProperty("hibernate.c3p0.max_statements","100");
         cfg.setProperty("hibernate.hbm2ddl.auto","update");
         cfg.setProperty("hibernate.archive.autodetection","class, hbm");
-        cfg.setProperty("hibernate.show_sql","true");
+        cfg.setProperty("hibernate.show_sql","false");
         cfg.setProperty("hibernate.connection.autocommit","false");
         
         //cfg.setProperty("hibernate.session_factory_name","hi");

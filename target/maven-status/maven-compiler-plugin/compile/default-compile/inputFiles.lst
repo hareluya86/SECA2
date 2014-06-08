@@ -8,6 +8,7 @@ C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\program\menu\TopMenu.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\component\user\UserAccountLockedException.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\entity\user\UserType.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\bootstrap\module\UserModule.java
+C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\component\file\FileOperationException.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\entity\file\FileEntity_.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\entity\user\UserEntity.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\program\user\FormUserLogin.java
@@ -30,6 +31,7 @@ C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\entity\file\FileListBean.
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\component\file\FileService.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\component\user\UserTypeException.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\bootstrap\module\ProgramModule.java
+C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\component\file\InvalidFileException.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\entity\file\FileEntity.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\program\messenger\FacesMessenger.java
 C:\Users\KH\Documents\GitHub\SECA2\src\main\java\seca2\program\file\FormFileUploader.java
