@@ -68,6 +68,28 @@
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Search Results</h3>
+                                    <div class="mbl">
+                                        <span class="label label-default">Uploaded after:</span><br />
+                                        <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
+                                                    value="#{ProgramFile.formFileFinder.searchStartDate}" 
+                                                    />
+                                    </div>
+                                    <div class="mbl">
+                                        <span class="label label-default">Uploaded before:</span><br />
+                                        <p:calendar placeholder="DD.MM.YYYY" pattern="dd.mm.yyyy" 
+                                                    value="#{ProgramFile.formFileFinder.searchEndDate}"
+                                                    />
+                                    </div>
+                                    <div class="mbl">
+                                        <p:commandButton value="Search" styleClass="btn btn-default btn-primary" 
+                                                         actionListener="#{ProgramFile.formFileFinder.search()}"
+                                                         update="@form"/>
+                                        <p:commandButton value="Reset" styleClass="btn btn-default "
+                                                         actionListener="#{ProgramFile.formFileFinder.reset()}"
+                                                         update="@form"/>
+                                        <p:commandButton value="Reset all" styleClass="btn btn-default "
+                                                         actionListener="#{ProgramFile.resetAll()}"
+                                                         update="@form,:form-file-editor"/>
                                     </div>
                                     <div class="panel-body search-panel" style="overflow-y: auto">
                                         <c:forEach items="#{ProgramFile.formFileFinder.wrappedResults}" var="wf">
